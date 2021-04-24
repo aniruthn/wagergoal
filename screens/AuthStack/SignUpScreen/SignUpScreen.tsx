@@ -1,12 +1,14 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, View, Platform } from "react-native";
 import { Appbar, TextInput, Snackbar, Button } from "react-native-paper";
 import { AuthStackParamList } from "./../AuthStackScreen";
 import firebase from "firebase";
+import * as ImagePicker from "expo-image-picker";
 
 import { AuthScreenStyles } from "./../AuthStackScreen.styles";
 import { UserModel } from "./../../../models/user";
+import { getFileObjectAsync } from "./../../../utils";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignUpScreen">;
@@ -15,9 +17,40 @@ interface Props {
 export default function SignUpScreen({ navigation }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [profilePic, setProfilePic] = useState<string | undefined>(undefined);
   const [message, setMessage] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
+
+  // Code for ImagePicker (from docs)
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  // Code for ImagePicker (from docs)
+  const pickImage = async () => {
+    console.log("picking image");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    console.log("done");
+    if (!result.cancelled) {
+      setProfilePic(result.uri);
+    }
+  };
 
   const onDismissSnackBar = () => setVisible(false);
   const showError = (error: string) => {
@@ -26,10 +59,24 @@ export default function SignUpScreen({ navigation }: Props) {
   };
 
   const createAccount = async () => {
+    if (!profilePic || !firstName || !lastName) {
+      showError("Add a profile picture.");
+      return;
+    }
     await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const object: Blob = (await getFileObjectAsync(profilePic)) as Blob;
+    const socialRef = firebase.firestore().collection("profilePics").doc();
+    const result = await firebase
+        .storage()
+        .ref()
+        .child(socialRef.id + ".jpg")
+        .put(object);
+    const downloadURL = await result.ref.getDownloadURL();
     const userObject: UserModel = {
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
+      profilePic: downloadURL,
       bets: [],
       friends: [],
     };
@@ -49,24 +96,37 @@ export default function SignUpScreen({ navigation }: Props) {
         </Appbar.Header>
         <View style={AuthScreenStyles.wrapperView}>
           <TextInput
-            label="Name"
-            value={name}
-            onChangeText={(name: any) => setName(name)}
+            label="First Name"
+            value={firstName}
+            onChangeText={(firstName: string) => setFirstName(firstName)}
+            style={{ backgroundColor: "white", marginBottom: 10 }}
+          />
+          <TextInput
+            label="Last Name"
+            value={lastName}
+            onChangeText={(lastName: string) => setLastName(lastName)}
             style={{ backgroundColor: "white", marginBottom: 10 }}
           />
           <TextInput
             label="Email"
             value={email}
-            onChangeText={(email: any) => setEmail(email)}
+            onChangeText={(email: string) => setEmail(email)}
             style={{ backgroundColor: "white", marginBottom: 10 }}
           />
           <TextInput
             label="Password"
             value={password}
-            onChangeText={(password: any) => setPassword(password)}
+            onChangeText={(password: string) => setPassword(password)}
             style={{ backgroundColor: "white", marginBottom: 10 }}
             secureTextEntry={true}
           />
+          <Button
+            mode="text"
+            onPress={pickImage}
+            style={{ marginTop: 20 }}
+          >
+            {profilePic ? "Change Image" : "Pick an image"}
+          </Button>
           <Button
             mode="contained"
             onPress={createAccount}
