@@ -4,6 +4,7 @@ import { View } from "react-native";
 import firebase from "firebase";
 
 import { RootStackScreen } from "./RootStack/RootStackScreen";
+import { AuthStackScreen } from "./AuthStack/AuthStackScreen";
 
 export function EntryStackScreen() {
   const [initializing, setInitializing] = useState(true);
@@ -24,7 +25,7 @@ export function EntryStackScreen() {
   } else if (!user) {
     return (
       <NavigationContainer>
-        {/* <AuthStackScreen /> */}
+        <AuthStackScreen />
       </NavigationContainer>
     );
   } else {
