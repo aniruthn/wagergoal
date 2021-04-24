@@ -6,6 +6,7 @@ import { AuthStackParamList } from "./../AuthStackScreen";
 import firebase from "firebase";
 
 import { AuthScreenStyles } from "./../AuthStackScreen.styles";
+import { UserModel } from "./../../../models/user";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignUpScreen">;
@@ -14,8 +15,9 @@ interface Props {
 export default function SignUpScreen({ navigation }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [message, setMessage] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [visible, setVisible] = useState<boolean>(false);
 
   const onDismissSnackBar = () => setVisible(false);
   const showError = (error: string) => {
@@ -23,17 +25,20 @@ export default function SignUpScreen({ navigation }: Props) {
     setVisible(true);
   };
 
-  const createAccount = () => {
-    try {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          //don't do nothing
-        });
-    } catch (error) {
-      showError(error.toString());
-    }
+  const createAccount = async () => {
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const userObject: UserModel = {
+      name: name,
+      email: email,
+      bets: [],
+      friends: [],
+    };
+    return await firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser?.uid)
+      .set(userObject)
+      .catch((error: any) => showError(error));
   };
 
   return (
@@ -43,6 +48,12 @@ export default function SignUpScreen({ navigation }: Props) {
           <Appbar.Content title="Sign Up" style={AuthScreenStyles.title} />
         </Appbar.Header>
         <View style={AuthScreenStyles.wrapperView}>
+          <TextInput
+            label="Name"
+            value={name}
+            onChangeText={(name: any) => setName(name)}
+            style={{ backgroundColor: "white", marginBottom: 10 }}
+          />
           <TextInput
             label="Email"
             value={email}
@@ -78,7 +89,6 @@ export default function SignUpScreen({ navigation }: Props) {
             {message}
           </Snackbar>
         </View>
-        
       </SafeAreaView>
     </>
   );
