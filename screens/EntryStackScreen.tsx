@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import firebase from "firebase";
 
-import { RootStackScreen } from "./RootStack/RootStackScreen";
+import RootStackScreen from "./RootStack/RootStackScreen";
 import { AuthStackScreen } from "./AuthStack/AuthStackScreen";
 
 export function EntryStackScreen() {
