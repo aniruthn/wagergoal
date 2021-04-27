@@ -63,21 +63,22 @@ export function RootStackScreen() {
   }
   return (
     <NavigationContainer>
-      <BottomTab.Navigator initialRouteName="BetDetailScreen">
+      <BottomTab.Navigator initialRouteName="BetDetailScreen" tabBarOptions={{ activeTintColor: "#c36902"}}>
         <BottomTab.Screen
           name="BetDetailScreen"
           component={BetDetailScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <TabBarIcon name="home-outline" color={color} />
+              <TabBarIcon name="newspaper-outline" color={color} />
             ),
+            
           }}
         />
         <BottomTab.Screen
           name="NewBetScreen"
           options={{
             tabBarIcon: ({ color }) => (
-              <TabBarIcon name="home-outline" color={color} />
+              <TabBarIcon name="add" color={color} />
             ),
           }}
           component={NewBetScreen}
