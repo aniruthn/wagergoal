@@ -1,15 +1,15 @@
 export interface BetModel {
-    // add stuff here like
     id?: string;
-    bet_name: string;
+    approved_users: string[];
     bet_desc: string;
+    bet_name: string;
     bet_type: string;
     creator: string;
-    date_end: string;
-    date_start: string;
+    date_end: firebase.firestore.Timestamp;
+    date_start: firebase.firestore.Timestamp;
     evidence: string[];
     invited_users: string[];
     status: string;
     wager: string;
-    quantity: string;
+    wager_quan: string;
 }
