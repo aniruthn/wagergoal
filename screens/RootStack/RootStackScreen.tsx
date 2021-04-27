@@ -41,9 +41,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 // import { MainStackScreen } from "./MainStack/MainStackScreen";
 import NewBetScreen from "./NewBetScreen/NewBetScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
+import BetDetailScreen from "./BetDetailScreen/BetDetailScreen.main";
 
 export type RootStackParamList = {
-  Main: undefined;
+  BetDetailScreen: undefined;
   NewBetScreen: undefined;
 };
 
@@ -53,12 +54,12 @@ export function RootStackScreen() {
   const options = { headerShown: false };
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" initialRouteName="Main">
-        {/* <RootStack.Screen
-          name="Main"
-          component={MainStackScreen}
+      <RootStack.Navigator mode="modal" initialRouteName="BetDetailScreen">
+        <RootStack.Screen
+          name="BetDetailScreen"
+          component={BetDetailScreen}
           options={options}
-        /> */}
+        />
         <RootStack.Screen
           name="NewBetScreen"
           options={options}
