@@ -55,7 +55,7 @@ export default function BetDetailScreen() {
   const [status, setStatus] = useState("Pending");
   const [wager, setWager] = useState("");
   const [wager_quan, setWagerQuan] = useState("");
-  const betUID = "GhNecFd5I7ACEoH3qyoz"; //temporary
+  const betUID = "zuRJkLF3BQWdv4sx44yY"; //temporary
   const [bet, setBet] = useState<BetModel | null>(null);
   const [visible, setVisible] = useState(false);
   const [photo, setPhoto] = useState<string | null>(null);
@@ -187,7 +187,7 @@ export default function BetDetailScreen() {
       showError(error.toString());
     }
   };
-  if (currentUserId == bet?.creator) {
+  if (currentUserId === bet?.creator) {
     return (
       <>
         <Bar />

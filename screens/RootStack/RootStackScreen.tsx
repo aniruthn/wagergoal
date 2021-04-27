@@ -37,11 +37,14 @@
 // }
 
 import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 // import { MainStackScreen } from "./MainStack/MainStackScreen";
 import NewBetScreen from "./NewBetScreen/NewBetScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
 import BetDetailScreen from "./BetDetailScreen/BetDetailScreen.main";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
   BetDetailScreen: undefined;
@@ -52,20 +55,34 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 export function RootStackScreen() {
   const options = { headerShown: false };
+  function TabBarIcon(props: {
+    name: React.ComponentProps<typeof Ionicons>["name"];
+    color: string;
+  }) {
+    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  }
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" initialRouteName="BetDetailScreen">
-        <RootStack.Screen
+      <BottomTab.Navigator initialRouteName="BetDetailScreen">
+        <BottomTab.Screen
           name="BetDetailScreen"
           component={BetDetailScreen}
-          options={options}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="home-outline" color={color} />
+            ),
+          }}
         />
-        <RootStack.Screen
+        <BottomTab.Screen
           name="NewBetScreen"
-          options={options}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="home-outline" color={color} />
+            ),
+          }}
           component={NewBetScreen}
         />
-      </RootStack.Navigator>
+      </BottomTab.Navigator>
     </NavigationContainer>
   );
 }
