@@ -54,7 +54,7 @@ export function RootStackScreen() {
   const options = { headerShown: false };
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" initialRouteName="BetDetailScreen">
+      <RootStack.Navigator mode="modal" initialRouteName="NewBetScreen">
         <RootStack.Screen
           name="BetDetailScreen"
           component={BetDetailScreen}
