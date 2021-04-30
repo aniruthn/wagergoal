@@ -148,34 +148,40 @@ export default function AccountScreen({ navigation }: any) {
     );
   };
 
+  const title: string = "Account Details";
+
   return (
     <>
       <Bar />
-      <Card style={{ margin: 8 }}>
-        <Card.Title title="Your Account Details" />
-        <Card.Content>
+      <View style={{ flex: 1 }}>
+        <Card style={{ margin: 8 }}>
+          <Card.Title
+            title={title}
+            titleStyle={{ alignSelf: "center" }}
+          />
+          <Card.Content>
             <Avatar.Image
               size={75}
               source={{ uri: userPics?.get(currentUserId)?.pic }}
+              style={{ alignSelf: "center" }}
             />
-            <View style={AccountScreenStyles.right}>
-              <Paragraph style={{ fontSize: 18, width: "80%" }}>
-                Name:{" "}
-                {currentUserInfo?.firstName + " " + currentUserInfo?.lastName}
-              </Paragraph>
-              <Paragraph style={{ fontSize: 18, width: "80%" }}>
-                Email: {currentUserInfo?.email}
-              </Paragraph>
-            </View>
-        </Card.Content>
-      </Card>
-      <Headline style={{textAlign: "center"}}>Your Bets</Headline>
-      <FlatList
-        data={bets}
-        renderItem={renderBet}
-        keyExtractor={(_: any, index: number) => "key-" + index}
-        ListEmptyComponent={ListEmptyComponent}
-      />
+            <Paragraph style={{ fontSize: 18, alignSelf: "center" }}>
+              Name:{" "}
+              {currentUserInfo?.firstName + " " + currentUserInfo?.lastName}
+            </Paragraph>
+            <Paragraph style={{ fontSize: 18, alignSelf: "center" }}>
+              Email: {currentUserInfo?.email}
+            </Paragraph>
+          </Card.Content>
+        </Card>
+        <Headline style={{ alignSelf: "center" }}>Your Bets</Headline>
+        <FlatList
+          data={bets}
+          renderItem={renderBet}
+          keyExtractor={(_: any, index: number) => "key-" + index}
+          ListEmptyComponent={ListEmptyComponent}
+        />
+      </View>
     </>
   );
 }
