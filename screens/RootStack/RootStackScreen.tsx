@@ -44,6 +44,7 @@ import NewBetScreen from "./NewBetScreen/NewBetScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
 import BetDetailScreen from "./BetDetailScreen/BetDetailScreen.main";
 import SocialNetworkScreen from "./SocialNetworkScreen/SocialNetworkScreen.main";
+import AccountScreen from "./AccountScreen/AccountScreen.main";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
@@ -51,6 +52,7 @@ export type RootStackParamList = {
   BetDetailScreen: undefined;
   NewBetScreen: undefined;
   SocialNetworkScreen: undefined;
+  AccountScreen: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -94,6 +96,15 @@ export function RootStackScreen() {
             ),
           }}
           component={NewBetScreen}
+        />
+        <BottomTab.Screen
+          name="AccountScreen"
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="person-circle-outline" color={color} />
+            ),
+          }}
+          component={AccountScreen}
         />
       </BottomTab.Navigator>
     </NavigationContainer>
