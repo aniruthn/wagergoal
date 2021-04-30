@@ -59,7 +59,19 @@ export default function SignUpScreen({ navigation }: Props) {
   };
 
   const createAccount = async () => {
-    if (!profilePic || !firstName || !lastName) {
+    if (firstName == "") {
+      showError("Add a first name.");
+      return;
+    } else if (lastName === "") {
+      showError("Add a last name.");
+      return;
+    } else if (email === "") {
+      showError("Add an email.");
+      return;
+    } else if (password === "") {
+      showError("Add a password.");
+      return;
+    } else if (profilePic === undefined) {
       showError("Add a profile picture.");
       return;
     }
@@ -85,7 +97,7 @@ export default function SignUpScreen({ navigation }: Props) {
       .collection("users")
       .doc(firebase.auth().currentUser?.uid)
       .set(userObject)
-      .catch((error: any) => showError(error));
+      .catch((error: any) => showError(error.message));
   };
 
   return (
@@ -141,14 +153,17 @@ export default function SignUpScreen({ navigation }: Props) {
           >
             Or, Sign In Instead
           </Button>
-          <Snackbar
+        </View>
+        <Snackbar
             duration={3000}
             visible={visible}
             onDismiss={onDismissSnackBar}
+            style={{ marginBottom: 50 }}
+            action={{label: 'Dismiss', onPress: onDismissSnackBar
+            }}
           >
             {message}
           </Snackbar>
-        </View>
       </SafeAreaView>
     </>
   );

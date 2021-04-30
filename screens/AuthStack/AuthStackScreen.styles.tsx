@@ -6,9 +6,8 @@ export const AuthScreenStyles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   header: {
-    backgroundColor: "#ffffff",
-    color: "#000000",
-
+    // backgroundColor: "#ffffff",
+    // color: "#000000",
   },
   title: {
     alignItems: "center"

@@ -23,24 +23,29 @@ export default function SignInScreen({ navigation }: Props) {
     setVisible(true);
   };
 
-  const trySignIn = () => {
+  const trySignIn = async () => {
+    if (email === "") {
+      showError("Please enter the email.")
+    } else if (password === "") {
+      showError("Please enter the password.")
+    }
     try {
-      firebase.auth().signInWithEmailAndPassword(email, password);
+      await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
-      showError(error.toString());
+      showError(error.message);
     }
   };
 
-  const resetPassword = () => {
+  const resetPassword = async () => {
     try {
-      firebase
+      await firebase
         .auth()
         .sendPasswordResetEmail(email)
         .then(() => {
           showError("Email sent.");
         });
     } catch (error) {
-      showError(error.toString());
+      showError(error.message);
     }
   };
 
@@ -81,14 +86,17 @@ export default function SignInScreen({ navigation }: Props) {
           >
             Reset Password
           </Button>
-          <Snackbar
+        </View>
+        <Snackbar
             duration={3000}
             visible={visible}
             onDismiss={onDismissSnackBar}
+            style={{ marginBottom: 50 }}
+            action={{label: 'Dismiss', onPress: onDismissSnackBar
+            }}
           >
             {message}
           </Snackbar>
-        </View>
       </SafeAreaView>
     </>
   );
