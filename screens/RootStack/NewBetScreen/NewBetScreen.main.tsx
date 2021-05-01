@@ -28,8 +28,8 @@ export default function NewBetScreen() {
   const [bet_desc, setBetDesc] = useState("");
   const [bet_type, setBetType] = useState("");
   const creator = currentUserId;
-  const [friends, setFriends] = useState<[]>([]);
-  const [friendsMap, setFriendsMap] = useState<[]>([]);
+  const [friends, setFriends] = useState([]);
+  const [friendsMap, setFriendsMap] = useState<any>([]);
   const [date_start, setDateStart] = useState("");
   const [date_end, setDateEnd] = useState("");
   const [evidence, setEvidence] = useState<String[]>([]);
@@ -38,6 +38,7 @@ export default function NewBetScreen() {
   const [status, setStatus] = useState("Pending");
   const [wager, setWager] = useState("");
   const [wager_quan, setWagerQuan] = useState("");
+
   useEffect(() => {
     const obj = firebase.firestore().collection("users").doc(currentUserId);
     obj.get().then((doc: any) => {
@@ -200,25 +201,28 @@ export default function NewBetScreen() {
     },
   ];
 
-  // const getDict = async () => {
-  //   for (var i = 0; i < friends.length; i++) {
-  //     console.log(i);
-  //     const fMap = friendsMap;
-  //     const obj = await firebase
-  //       .firestore()
-  //       .collection("users")
-  //       .doc(friends[i]);
-  //     obj.get().then((doc: any) => {
-  //       // console.log(doc.data().friends);
-  //       var frdname = doc.data().firstName + " " + doc.data().lastName;
-  //       fMap.push(frdname);
-  //       setFriendsMap(fMap);
-  //     });
-  //   }
-  // };
-  // useEffect(() => {
-  //   getDict();
-  // }, []);
+  const getDict = async () => {
+    const fMap = [];
+    for (var i = 0; i < friends.length; i++) {
+      console.log(i);
+      const doc = await firebase
+        .firestore()
+        .collection("users")
+        .doc(friends[i])
+        .get();
+      const friend = doc.data();
+      const frdname = friend?.firstName + " " + friend?.lastName;
+      const obj = { id: i, name: frdname };
+      console.log(obj);
+      fMap.push(obj);
+    }
+    setFriendsMap(fMap);
+    console.log(fMap);
+  };
+  useEffect(() => {
+    getDict();
+  }, []);
+
   // console.log("this is friend" + friends + "yay");
   // console.log(friendsMap);
 
@@ -277,7 +281,7 @@ export default function NewBetScreen() {
           }}
           itemTextStyle={{ color: "#222" }}
           itemsContainerStyle={{ maxHeight: 140 }}
-          items={sampleitems}
+          items={friendsMap}
           // defaultIndex={2}
           chip={true}
           resetValue={true}
