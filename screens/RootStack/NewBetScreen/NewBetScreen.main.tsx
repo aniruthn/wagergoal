@@ -32,9 +32,8 @@ export default function NewBetScreen() {
   const [friendsMap, setFriendsMap] = useState<any>([]);
   const [date_start, setDateStart] = useState("");
   const [date_end, setDateEnd] = useState("");
-  const [evidence, setEvidence] = useState<String[]>([]);
-  const [invited_users, setInvitedUsers] = useState<[]>([]);
-  const [approved_users, setApprovedUsers] = useState<String[]>([]);
+  const [evidence, setEvidence] = useState<string[]>([]);
+  const [invited_users, setInvitedUsers] = useState<any[]>([]);
   const [status, setStatus] = useState("Pending");
   const [wager, setWager] = useState("");
   const [wager_quan, setWagerQuan] = useState("");
@@ -151,7 +150,6 @@ export default function NewBetScreen() {
         date_end: date_end,
         evidence: evidence,
         invited_users: invited_users,
-        approved_users: approved_users,
         status: status,
         wager: wager,
         wager_quan: wager_quan,
@@ -260,8 +258,8 @@ export default function NewBetScreen() {
           multi={true}
           selectedItems={invited_users}
           onItemSelect={(user: String) => {
-            const users = invited_users;
-            users.push(user);
+            const users = invited_users.slice();
+            users.push({ id: user, status: "pending" });
             setInvitedUsers(users);
           }}
           containerStyle={{ padding: 5 }}

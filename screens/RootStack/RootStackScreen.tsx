@@ -43,14 +43,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import NewBetScreen from "./NewBetScreen/NewBetScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
 import BetDetailScreen from "./BetDetailScreen/BetDetailScreen.main";
-import SocialNetworkScreen from "./SocialNetworkScreen/SocialNetworkScreen.main";
-import AccountScreen from "./AccountScreen/AccountScreen.main";
+import SocialNetworkScreen from "./SocialNetworkStack/SocialNetworkScreen/SocialNetworkScreen.main";
+import AccountScreen from "./AccountStack/AccountScreen/AccountScreen.main";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AccountStackScreen } from "./AccountStack/AccountStackScreen";
+import { SocialNetworkStackScreen } from "./SocialNetworkStack/SocialNetworkStackScreen";
 const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
   BetDetailScreen: undefined;
-  NewBetScreen: undefined;
   SocialNetworkScreen: undefined;
   AccountScreen: undefined;
 };
@@ -68,10 +69,10 @@ export function RootStackScreen() {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
-        initialRouteName="BetDetailScreen"
+        initialRouteName="NewBetScreen"
         tabBarOptions={{ activeTintColor: "#c36902" }}
       >
-        <BottomTab.Screen
+        {/* <BottomTab.Screen
           name="BetDetailScreen"
           component={BetDetailScreen}
           options={{
@@ -79,15 +80,14 @@ export function RootStackScreen() {
               <TabBarIcon name="newspaper-outline" color={color} />
             ),
           }}
-        />
+        /> */}
         <BottomTab.Screen
           name="SocialNetworkScreen"
-          component={SocialNetworkScreen}
+          component={SocialNetworkStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <TabBarIcon name="home-outline" color={color} />
             ),
-            
           }}
         />
         <BottomTab.Screen
@@ -104,7 +104,7 @@ export function RootStackScreen() {
               <TabBarIcon name="person-circle-outline" color={color} />
             ),
           }}
-          component={AccountScreen}
+          component={AccountStackScreen}
         />
       </BottomTab.Navigator>
     </NavigationContainer>
