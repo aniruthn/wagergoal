@@ -51,9 +51,9 @@ import { SocialNetworkStackScreen } from "./SocialNetworkStack/SocialNetworkStac
 const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
-  NewBetScreen: undefined;
-  SocialNetworkScreen: undefined;
-  AccountScreen: undefined;
+  "New Bet": undefined;
+  "Social Feed": undefined;
+  "Account": undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -69,7 +69,7 @@ export function RootStackScreen() {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
-        initialRouteName="NewBetScreen"
+        initialRouteName="New Bet"
         tabBarOptions={{ activeTintColor: "#c36902" }}
       >
         {/* <BottomTab.Screen
@@ -82,7 +82,7 @@ export function RootStackScreen() {
           }}
         /> */}
         <BottomTab.Screen
-          name="SocialNetworkScreen"
+          name="Social Feed"
           component={SocialNetworkStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
@@ -91,14 +91,14 @@ export function RootStackScreen() {
           }}
         />
         <BottomTab.Screen
-          name="NewBetScreen"
+          name="New Bet"
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="add" color={color} />,
           }}
           component={NewBetScreen}
         />
         <BottomTab.Screen
-          name="AccountScreen"
+          name="Account"
           options={{
             tabBarIcon: ({ color }) => (
               <TabBarIcon name="person-circle-outline" color={color} />
