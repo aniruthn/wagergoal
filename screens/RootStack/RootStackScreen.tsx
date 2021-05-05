@@ -41,10 +41,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 // import { MainStackScreen } from "./MainStack/MainStackScreen";
 import NewBetScreen from "./NewBetScreen/NewBetScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
+<<<<<<< Updated upstream
+=======
+import BetDetailScreen from "./BetDetailScreen/BetDetailScreen.main";
+import FriendScreen from "./FriendScreen/FriendScreen.main";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
+>>>>>>> Stashed changes
 
 export type RootStackParamList = {
   Main: undefined;
   NewBetScreen: undefined;
+  FriendScreen: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -53,6 +61,7 @@ export function RootStackScreen() {
   const options = { headerShown: false };
   return (
     <NavigationContainer>
+<<<<<<< Updated upstream
       <RootStack.Navigator mode="modal" initialRouteName="Main">
         {/* <RootStack.Screen
           name="Main"
@@ -63,6 +72,36 @@ export function RootStackScreen() {
           name="NewBetScreen"
           options={options}
           component={NewBetScreen}
+=======
+      <BottomTab.Navigator
+        initialRouteName="BetDetailScreen"
+        tabBarOptions={{ activeTintColor: "#c36902" }}
+      >
+        <BottomTab.Screen
+          name="BetDetailScreen"
+          component={BetDetailScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="newspaper-outline" color={color} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="NewBetScreen"
+          options={{
+            tabBarIcon: ({ color }) => <TabBarIcon name="add" color={color} />,
+          }}
+          component={NewBetScreen}
+        />
+        <BottomTab.Screen
+          name="FriendScreen"
+          component={FriendScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="newspaper-outline" color={color} />
+            ),
+          }}
+>>>>>>> Stashed changes
         />
       </RootStack.Navigator>
     </NavigationContainer>
