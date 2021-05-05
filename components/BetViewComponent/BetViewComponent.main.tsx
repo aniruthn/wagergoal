@@ -35,7 +35,8 @@ export const BetView = ({
               left = {() => <Avatar.Image size={40} source={{ uri: userPics?.get(item.creator)?.pic }} />}
             /> */}
         <Card.Title
-          title={item.bet_type + ", " + item.status}
+          // Did we remove bet types?
+          title={item.bet_type ? item.bet_type + ", " : "" + item.status}
           subtitle={
             item?.date_start?.toDate()?.toLocaleString() +
             " to " +
