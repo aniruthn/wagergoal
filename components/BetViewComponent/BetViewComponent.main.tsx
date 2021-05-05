@@ -23,6 +23,14 @@ export const BetView = ({
       return <></>;
     }
 
+    const BottomRowTitle = () => {
+      if (item.invited_users.length !== 0) {
+        return(<Paragraph>Invited Users</Paragraph>);
+      } else {
+        return (<></>);
+      }
+    }
+
     return (
       <Card onPress={onPress} style={{ margin: 8 }}>
         {/* <Card.Title
@@ -43,7 +51,7 @@ export const BetView = ({
             item?.date_end?.toDate()?.toLocaleString()
           }
         />
-        <Card.Content style={BetViewComponentStyles.container}>
+        <Card.Content>
           <View style={BetViewComponentStyles.container}>
             <Avatar.Image
               size={75}
@@ -59,6 +67,19 @@ export const BetView = ({
                 {"Wager: \n" + item.wager + "\nQuantity: " + item.wager_quan}
               </Paragraph>
             </View>
+          </View>
+          <BottomRowTitle />
+          <View style={BetViewComponentStyles.container}>
+            {item.invited_users.map((user) => {
+              return (
+                <Avatar.Image
+                  style={{ margin: 8}}
+                  key={user.id}
+                  size={50}
+                  source={{ uri: userPics?.get(user.id)?.pic }}
+                />
+              );
+            })}
           </View>
         </Card.Content>
       </Card>

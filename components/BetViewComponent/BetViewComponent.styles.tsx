@@ -11,4 +11,9 @@ export const BetViewComponentStyles = StyleSheet.create({
     marginLeft: 20,
     width: "100%",
   },
+  bottomRow: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  }
 });
