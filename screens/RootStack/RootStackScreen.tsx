@@ -51,7 +51,7 @@ import { SocialNetworkStackScreen } from "./SocialNetworkStack/SocialNetworkStac
 const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
-  BetDetailScreen: undefined;
+  NewBetScreen: undefined;
   SocialNetworkScreen: undefined;
   AccountScreen: undefined;
 };
