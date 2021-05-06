@@ -51,8 +51,8 @@ export default function BetDetailScreen({
   const [user, setUser] = useState(null);
   const [evidence, setEvidence] = useState<string[]>(route.params.bet.evidence);
   const [inviteeStatuses, setInviteeStatuses] = useState<any[]>([]);
-  const currentUserId = "p0vS2XI7u2PXXCIAo87OQ126g1H3";
-  // const currentUserId = firebase.auth().currentUser!.uid;
+  // const currentUserId = "p0vS2XI7u2PXXCIAo87OQ126g1H3";
+  const currentUserId = firebase.auth().currentUser!.uid;
   const [inviteeIndex, setInviteeIndex] = useState<number>(-1);
   const [permission, setPermission] = useState<String>("");
   const [visible, setVisible] = useState(false);
@@ -381,7 +381,7 @@ export default function BetDetailScreen({
               </Text>
             </View>
           </View>
-          {evidence && permission === "creator" && (
+          {evidence && permission === "creator" && betStatus !== "Bet Expired" && (
             <Button
               mode="text"
               compact={true}
@@ -416,7 +416,7 @@ export default function BetDetailScreen({
             imageLoadingColor="#2196F3"
             circleLoop
           />
-          {permission == "creator" && (
+          {permission == "creator" && betStatus !== "Bet Expired" && (
             <Button
               mode="text"
               onPress={addImageEvidence}
@@ -438,7 +438,7 @@ export default function BetDetailScreen({
             {`Bet Ends On ${bet?.date_end?.toDate()?.toLocaleString()}`}
           </Text>
 
-          {permission === "invitee" && (
+          {permission === "invitee" && betStatus !== "Bet Expired" && (
             <View
               style={{
                 display: "flex",
