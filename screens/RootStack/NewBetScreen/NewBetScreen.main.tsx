@@ -215,7 +215,7 @@ export default function NewBetScreen() {
       fMap.push(obj);
     }
     setFriendsMap(fMap);
-    console.log(fMap);
+    console.log("fmap: ", fMap);
   };
   useEffect(() => {
     getDict();

@@ -127,7 +127,7 @@ export default function AccountScreen({ navigation }: any) {
         </Card>
         <Headline style={{ alignSelf: "center" }}>Your Bets</Headline>
         <FlatList
-          data={bets}
+          data={bets.filter((bet) => bet.creator === currentUserId)}
           renderItem={BetView({ navigation, userPics })}
           keyExtractor={(_: any, index: number) => "key-" + index}
           ListEmptyComponent={ListEmptyComponent}
